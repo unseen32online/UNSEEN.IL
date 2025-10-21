@@ -7,29 +7,39 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="hero-section">
-        <div className="max-w-7xl mx-auto px-6 py-32 md:py-48">
-          <div className="max-w-3xl">
-            <h1 className="hero-title">
-              Everyday Essentials,
-              <br />
-              Timeless Style
-            </h1>
-            <p className="hero-subtitle">
-              Discover our curated collection of casual clothing designed for comfort and crafted for the modern lifestyle.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 mt-8">
-              <Link to="/collection/tops">
-                <Button size="lg" className="primary-button w-full sm:w-auto">
-                  Shop Tops
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </Link>
-              <Link to="/collection/pants">
-                <Button size="lg" variant="outline" className="secondary-button w-full sm:w-auto">
-                  Shop Pants
-                </Button>
-              </Link>
+      <section className="hero-section-with-image">
+        <div className="hero-image-container">
+          <img 
+            src="https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/kcm702xw_emrebey_09_09_25_0056.jpeg" 
+            alt="UNSEEN Collection"
+            className="hero-main-image"
+          />
+          <div className="hero-overlay"></div>
+        </div>
+        <div className="hero-content-overlay">
+          <div className="max-w-7xl mx-auto px-6 py-32 md:py-48">
+            <div className="max-w-3xl">
+              <h1 className="hero-title">
+                Everyday Essentials,
+                <br />
+                Timeless Style
+              </h1>
+              <p className="hero-subtitle">
+                Discover our curated collection of casual clothing designed for comfort and crafted for the modern lifestyle.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <Link to="/collection/tops">
+                  <Button size="lg" className="primary-button w-full sm:w-auto">
+                    Shop Tops
+                    <ArrowRight className="ml-2 w-5 h-5" />
+                  </Button>
+                </Link>
+                <Link to="/collection/pants">
+                  <Button size="lg" variant="outline" className="secondary-button w-full sm:w-auto">
+                    Shop Pants
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
