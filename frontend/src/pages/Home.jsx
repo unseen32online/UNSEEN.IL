@@ -96,7 +96,7 @@ const Home = () => {
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="section-title">The UNSEEN Philosophy</h2>
           <p className="philosophy-text">
-            We believe in creating clothing that transcends trends. Each piece is thoughtfully designed to blend seamlessly into your daily life, offering comfort without compromising on style. Our commitment is to quality, sustainability, and timeless design that you'll reach for season after season.
+            We are international streetwear brand that offers uncompromising luxury clothes. Our commitment is to quality, sustainability, and timeless design that you'll reach for season after season.
           </p>
         </div>
       </section>
