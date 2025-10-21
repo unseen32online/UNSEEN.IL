@@ -22,6 +22,24 @@ export const mockProducts = [
   },
   {
     id: 'top-2',
+    name: 'Good Old Times',
+    category: 'tops',
+    price: 449,
+    description: '300 gsm over-sized t-shirt, made in Portugal. Classic vintage-inspired design with UNSEEN branding.',
+    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    colors: ['Black', 'White'],
+    image: 'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/l19mdrg6_emrebey_09_09_25_0134.jpeg',
+    images: [
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/l19mdrg6_emrebey_09_09_25_0134.jpeg',
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/m973hap3_emrebey_09_09_25_0132.jpeg',
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/qufvxdu1_emrebey_09_09_25_0145.jpeg',
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/h5yox8bw_emrebey_09_09_25_0146.jpeg',
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/l3aqnyc3_emrebey_09_09_25_0149.jpeg'
+    ],
+    inStock: true
+  },
+  {
+    id: 'top-3',
     name: 'Essential Cotton Tee',
     category: 'tops',
     price: 45,
