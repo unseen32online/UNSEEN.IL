@@ -33,10 +33,9 @@ const Footer = () => {
           <div>
             <h4 className="footer-heading">Support</h4>
             <ul className="space-y-3">
-              <li><a href="#" className="footer-link">Contact Us</a></li>
-              <li><a href="#" className="footer-link">Shipping Info</a></li>
-              <li><a href="#" className="footer-link">Returns</a></li>
-              <li><a href="#" className="footer-link">Size Guide</a></li>
+              <li><a href="mailto:UNSEEN32.ONLINE@GMAIL.COM" className="footer-link">Contact Us</a></li>
+              <li><Link to="/privacy-policy" className="footer-link">Privacy Policy</Link></li>
+              <li><Link to="/privacy-policy" className="footer-link">Shipping & Returns</Link></li>
             </ul>
           </div>
 
