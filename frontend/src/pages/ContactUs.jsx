@@ -54,7 +54,7 @@ const ContactUs = () => {
             </div>
             <h3 className="contact-card-title">Instagram</h3>
             <a 
-              href="https://instagram.com/unseen.il"
+              href="https://www.instagram.com/unseen.il/"
               target="_blank"
               rel="noopener noreferrer"
               className="contact-link"
