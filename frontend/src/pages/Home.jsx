@@ -10,7 +10,7 @@ const Home = () => {
       <section className="hero-section-with-image">
         <div className="hero-image-container">
           <img 
-            src="https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/kcm702xw_emrebey_09_09_25_0056.jpeg" 
+            src="https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/0kaglgn2_emrebey_09_09_25_0057.jpeg" 
             alt="UNSEEN Collection"
             className="hero-main-image"
           />
