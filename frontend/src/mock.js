@@ -4,6 +4,24 @@ export const mockProducts = [
   // TOPS
   {
     id: 'top-1',
+    name: 'Timeless Unseen',
+    category: 'tops',
+    price: 449,
+    description: '300 gsm over-sized t-shirt, made in Portugal. Premium quality fabric with iconic UNSEEN branding.',
+    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    colors: ['Black', 'White'],
+    image: 'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/k936sl7w_emrebey_09_09_25_0053.jpeg',
+    images: [
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/k936sl7w_emrebey_09_09_25_0053.jpeg',
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/jvn3mti9_emrebey_09_09_25_0056.jpeg',
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/crls0gwa_emrebey_09_09_25_0057.jpeg',
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/4k7o5afj_emrebey_09_09_25_0112.jpeg',
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/abmy3evu_emrebey_09_09_25_0114.jpeg'
+    ],
+    inStock: true
+  },
+  {
+    id: 'top-2',
     name: 'Essential Cotton Tee',
     category: 'tops',
     price: 45,
