@@ -63,14 +63,34 @@ const ProductDetail = () => {
           {/* Product Images */}
           <div>
             <div className="product-detail-image-placeholder">
-              <div className="placeholder-text">PRODUCT IMAGE</div>
+              {product.image ? (
+                <img 
+                  src={product.image} 
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="placeholder-text">PRODUCT IMAGE</div>
+              )}
             </div>
             <div className="grid grid-cols-3 gap-4 mt-4">
-              {[1, 2, 3].map((idx) => (
-                <div key={idx} className="product-thumbnail-placeholder">
-                  <div className="text-xs text-warm-gray">Image {idx}</div>
-                </div>
-              ))}
+              {product.images && product.images.filter(img => img).length > 0 ? (
+                product.images.filter(img => img).slice(0, 3).map((img, idx) => (
+                  <div key={idx} className="product-thumbnail-placeholder cursor-pointer">
+                    <img 
+                      src={img} 
+                      alt={`${product.name} ${idx + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))
+              ) : (
+                [1, 2, 3].map((idx) => (
+                  <div key={idx} className="product-thumbnail-placeholder">
+                    <div className="text-xs text-warm-gray">Image {idx}</div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
