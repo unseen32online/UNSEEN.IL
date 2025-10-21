@@ -18,28 +18,15 @@ const Home = () => {
         </div>
         <div className="hero-content-overlay">
           <div className="max-w-7xl mx-auto px-6 py-32 md:py-48">
-            <div className="max-w-3xl">
-              <h1 className="hero-title">
+            <div className="max-w-2xl mx-auto text-center">
+              <h1 className="hero-title-centered">
                 Everyday Essentials,
                 <br />
                 Timeless Style
               </h1>
-              <p className="hero-subtitle">
+              <p className="hero-subtitle-centered">
                 Discover our curated collection of casual clothing designed for comfort and crafted for the modern lifestyle.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                <Link to="/collection/tops">
-                  <Button size="lg" className="primary-button w-full sm:w-auto">
-                    Shop Tops
-                    <ArrowRight className="ml-2 w-5 h-5" />
-                  </Button>
-                </Link>
-                <Link to="/collection/pants">
-                  <Button size="lg" variant="outline" className="secondary-button w-full sm:w-auto">
-                    Shop Pants
-                  </Button>
-                </Link>
-              </div>
             </div>
           </div>
         </div>
