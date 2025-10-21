@@ -785,3 +785,18 @@
     height: 220px;
   }
 }
+
+/* Privacy Policy Page Styles */
+.privacy-content {
+  color: var(--accent-gray);
+}
+
+.section-heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: var(--accent-primary);
+  margin-bottom: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
