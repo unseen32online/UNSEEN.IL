@@ -6,36 +6,46 @@
 
 @layer base {
   :root {
-    /* Brand Colors */
-    --warm-sage: #C4B5A0;
-    --soft-taupe: #D4C4B0;
-    --rich-chocolate: #6B4E37;
-    --charcoal: #2C2C2C;
-    --cream-white: #FAF9F7;
-    --soft-gray: #F5F3F0;
-    --warm-gray: #8B7D6B;
+    /* Dark Brand Colors */
+    --dark-bg: #0A0A0A;
+    --dark-secondary: #1A1A1A;
+    --dark-tertiary: #2A2A2A;
+    --accent-primary: #FFFFFF;
+    --accent-secondary: #E5E5E5;
+    --accent-gold: #D4AF37;
+    --accent-gray: #6B6B6B;
+    --border-dark: #333333;
+    
+    /* Legacy color names for compatibility */
+    --charcoal: #0A0A0A;
+    --cream-white: #FFFFFF;
+    --soft-gray: #1A1A1A;
+    --warm-gray: #6B6B6B;
+    --warm-sage: #D4AF37;
+    --soft-taupe: #2A2A2A;
+    --rich-chocolate: #D4AF37;
     
     /* Shadcn Variables */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 17%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 17%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 17%;
-    --primary: 26 19% 66%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 31 22% 78%;
-    --secondary-foreground: 0 0% 17%;
-    --muted: 30 14% 95%;
-    --muted-foreground: 32 13% 45%;
-    --accent: 30 14% 95%;
-    --accent-foreground: 0 0% 17%;
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 45 80% 52%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 16%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 42%;
+    --accent: 0 0% 16%;
+    --accent-foreground: 0 0% 98%;
     --destructive: 0 62% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 30 14% 93%;
-    --input: 30 14% 93%;
-    --ring: 26 19% 66%;
-    --radius: 0.25rem;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 45 80% 52%;
+    --radius: 0rem;
   }
 }
 
