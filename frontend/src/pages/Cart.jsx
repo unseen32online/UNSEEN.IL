@@ -43,7 +43,7 @@ const Cart = () => {
                   <p className="cart-item-details">
                     {item.selectedColor} / {item.selectedSize}
                   </p>
-                  <p className="cart-item-price">${item.price}</p>
+                  <p className="cart-item-price">₪{item.price}</p>
                 </div>
 
                 <div className="flex flex-col items-end space-y-4">
