@@ -149,9 +149,8 @@ const ProductDetail = () => {
               <div className="product-detail-section">
                 <h3 className="product-detail-section-title">Details</h3>
                 <ul className="product-detail-list">
-                  <li>Premium quality materials</li>
-                  <li>Carefully crafted construction</li>
-                  <li>Designed for everyday comfort</li>
+                  <li>Made in Portugal</li>
+                  <li>Oversize design</li>
                 </ul>
               </div>
               <div className="product-detail-section">
