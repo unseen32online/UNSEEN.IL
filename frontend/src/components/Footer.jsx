@@ -43,7 +43,7 @@ const Footer = () => {
           <div>
             <h4 className="footer-heading">Connect</h4>
             <div className="flex space-x-4 mt-4">
-              <a href="https://instagram.com/unseen.il" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <a href="https://www.instagram.com/unseen.il/" target="_blank" rel="noopener noreferrer" className="social-icon">
                 <Instagram className="w-5 h-5" />
               </a>
               <a href="https://wa.me/972528657666" target="_blank" rel="noopener noreferrer" className="social-icon">
