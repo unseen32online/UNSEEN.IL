@@ -156,7 +156,7 @@ const ProductDetail = () => {
               <div className="product-detail-section">
                 <h3 className="product-detail-section-title">Shipping & Returns</h3>
                 <ul className="product-detail-list">
-                  <li>Free shipping on orders over $100</li>
+                  <li>Free shipping on orders over ₪100</li>
                   <li>30-day return policy</li>
                   <li>Ships within 2-3 business days</li>
                 </ul>
