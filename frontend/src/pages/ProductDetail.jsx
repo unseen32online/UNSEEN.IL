@@ -97,7 +97,7 @@ const ProductDetail = () => {
           {/* Product Info */}
           <div>
             <h1 className="product-detail-title">{product.name}</h1>
-            <p className="product-detail-price">${product.price}</p>
+            <p className="product-detail-price">₪{product.price}</p>
             <p className="product-detail-description">{product.description}</p>
 
             {/* Color Selection */}
