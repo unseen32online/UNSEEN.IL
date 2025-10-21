@@ -9,7 +9,7 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-dark-bg border-b border-dark">
-      <div className="max-w-7xl mx-auto px-6 py-6">
+      <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between relative">
           {/* Desktop Navigation - Left */}
           <nav className="hidden md:flex items-center space-x-8 flex-1">
@@ -18,19 +18,19 @@ const Header = () => {
             <Link to="/collection/pants" className="nav-link">Pants</Link>
           </nav>
 
-          {/* Logo - Center */}
+          {/* Logo - Center (Much Bigger) */}
           <Link to="/" className="flex items-center absolute left-1/2 transform -translate-x-1/2">
             <img 
               src="https://customer-assets.emergentagent.com/job_b445d7de-0eb2-4eae-9616-38092e60a3e6/artifacts/cmb2hfcf_Black%20White%20Bold%20Modern%20Clothing%20Brand%20Logo%20%281%29.png" 
               alt="UNSEEN" 
-              className="h-12 md:h-16 brightness-0 invert"
+              className="h-20 md:h-28 brightness-0 invert"
             />
           </Link>
 
           {/* Cart Icon - Right */}
           <div className="flex items-center space-x-4 flex-1 justify-end">
             <Link to="/cart" className="relative cart-icon">
-              <ShoppingBag className="w-6 h-6" />
+              <ShoppingBag className="w-7 h-7" />
               {cartCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-accent-gold text-dark-bg text-xs font-black w-5 h-5 flex items-center justify-center rounded-full">
                   {cartCount}
@@ -43,7 +43,7 @@ const Header = () => {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden text-accent-primary"
             >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
             </button>
           </div>
         </div>
