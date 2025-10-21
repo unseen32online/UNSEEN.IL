@@ -17,7 +17,7 @@ const Home = () => {
           <div className="hero-overlay"></div>
         </div>
         <div className="hero-content-overlay">
-          <div className="max-w-7xl mx-auto px-6 py-32 md:py-48">
+          <div className="max-w-7xl mx-auto px-6 pb-16 md:pb-24" style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
             <div className="max-w-2xl mx-auto text-center">
               <h1 className="hero-title-centered">
                 Everyday Essentials,
