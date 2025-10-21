@@ -55,8 +55,9 @@
   }
   
   body {
-    @apply bg-cream-white text-charcoal;
+    @apply bg-dark-bg text-accent-primary;
     font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin: 0;
@@ -64,9 +65,10 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Cormorant', serif;
-    font-weight: 300;
-    letter-spacing: -0.02em;
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 }
 
