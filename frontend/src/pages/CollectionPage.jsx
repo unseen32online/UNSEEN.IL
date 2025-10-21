@@ -53,7 +53,15 @@ const CollectionPage = () => {
               className="product-card group"
             >
               <div className="product-image-placeholder">
-                <div className="placeholder-text">PRODUCT IMAGE</div>
+                {product.image ? (
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="placeholder-text">PRODUCT IMAGE</div>
+                )}
                 <div className="product-overlay">
                   <Button className="overlay-button">
                     View Details
