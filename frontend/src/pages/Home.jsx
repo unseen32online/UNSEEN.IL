@@ -16,8 +16,8 @@ const Home = () => {
           />
           <div className="hero-overlay"></div>
         </div>
-        <div className="hero-content-overlay" style={{ display: 'flex', alignItems: 'flex-end', height: '100%' }}>
-          <div className="max-w-7xl mx-auto px-6 pb-12 md:pb-16 w-full">
+        <div className="hero-content-overlay">
+          <div className="max-w-7xl mx-auto px-6 pb-8 md:pb-12 w-full">
             <div className="max-w-2xl mx-auto text-center">
               <h1 className="hero-title-centered">
                 Everyday Essentials,
