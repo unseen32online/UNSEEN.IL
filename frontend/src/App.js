@@ -10,6 +10,7 @@ import CollectionPage from "./pages/CollectionPage";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import ContactUs from "./pages/ContactUs";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/contact" element={<ContactUs />} />
           </Routes>
           <Footer />
         </BrowserRouter>
