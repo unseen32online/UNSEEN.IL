@@ -800,3 +800,68 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+
+/* Contact Us Page Styles */
+.contact-card {
+  background-color: var(--dark-secondary);
+  border: 2px solid var(--border-dark);
+  padding: 3rem 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.contact-card:hover {
+  border-color: var(--accent-gold);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.2);
+}
+
+.contact-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--dark-bg);
+  border: 2px solid var(--border-dark);
+  color: var(--accent-gold);
+  transition: all 0.3s ease;
+}
+
+.contact-card:hover .contact-icon-wrapper {
+  background-color: var(--accent-gold);
+  color: var(--dark-bg);
+  border-color: var(--accent-gold);
+}
+
+.contact-card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--accent-primary);
+  margin-bottom: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contact-link {
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent-gray);
+  transition: color 0.3s ease;
+  word-break: break-all;
+}
+
+.contact-link:hover {
+  color: var(--accent-gold);
+}
+
+.contact-info-box {
+  background-color: var(--dark-secondary);
+  border: 2px solid var(--border-dark);
+  padding: 3rem 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
