@@ -115,6 +115,25 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Instagram Banner */}
+      <section className="instagram-banner">
+        <a 
+          href="https://www.instagram.com/unseen.il/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="instagram-banner-link"
+        >
+          <div className="instagram-banner-content">
+            <Instagram className="instagram-icon" />
+            <div>
+              <h3 className="instagram-banner-title">Follow Us on Instagram</h3>
+              <p className="instagram-banner-subtitle">@unseen.il - Join our community for exclusive drops & behind the scenes</p>
+            </div>
+            <ArrowRight className="instagram-arrow" />
+          </div>
+        </a>
+      </section>
     </div>
   );
 };
