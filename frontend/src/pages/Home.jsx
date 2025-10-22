@@ -66,12 +66,16 @@ const Home = () => {
             {/* Pants Collection */}
             <Link to="/collection/pants" className="collection-card group">
               <div className="collection-image-placeholder">
-                <div className="placeholder-text">PANTS COLLECTION</div>
+                <img 
+                  src="https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/8wgzlv16_emrebey_09_09_25_0011.jpeg" 
+                  alt="Shorts Collection"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="collection-content">
-                <h3 className="collection-title">Pants</h3>
+                <h3 className="collection-title">Shorts</h3>
                 <p className="collection-description">
-                  From tailored chinos to relaxed fits, find your perfect pair
+                  From bandana patterns to streetwear essentials
                 </p>
                 <span className="collection-link">
                   Explore Collection <ArrowRight className="inline w-4 h-4 ml-1" />
