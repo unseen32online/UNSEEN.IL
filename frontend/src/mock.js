@@ -90,6 +90,24 @@ export const mockProducts = [
       'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/js3xg8my_emrebey_09_09_25_0047.jpeg'
     ],
     inStock: true
+  },
+  
+  // PANTS/SHORTS
+  {
+    id: 'pant-1',
+    name: 'Bandana Shorts',
+    category: 'pants',
+    price: 199,
+    description: 'Premium basketball-style shorts with signature bandana pattern. Comfortable fit perfect for street style.',
+    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    colors: ['Black', 'Teal', 'White'],
+    image: 'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/8wgzlv16_emrebey_09_09_25_0011.jpeg',
+    images: [
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/8wgzlv16_emrebey_09_09_25_0011.jpeg',
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/kmlqx0f0_emrebey_09_09_25_0032.jpeg',
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/tq34dqvg_emrebey_09_09_25_0021.jpeg'
+    ],
+    inStock: true
   }
 ];
 
