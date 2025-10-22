@@ -15,7 +15,7 @@ const Header = () => {
           <nav className="hidden md:flex items-center space-x-8 flex-1">
             <Link to="/" className="nav-link">Home</Link>
             <Link to="/collection/tops" className="nav-link">Tops</Link>
-            <Link to="/collection/pants" className="nav-link">Pants</Link>
+            <Link to="/collection/pants" className="nav-link">Shorts</Link>
           </nav>
 
           {/* Logo - Center (Much Bigger) */}
