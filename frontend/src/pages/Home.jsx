@@ -46,7 +46,11 @@ const Home = () => {
             {/* Tops Collection */}
             <Link to="/collection/tops" className="collection-card group">
               <div className="collection-image-placeholder">
-                <div className="placeholder-text">TOPS COLLECTION</div>
+                <img 
+                  src="https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/xiotp9h5_emrebey_09_09_25_0134.jpeg" 
+                  alt="Tops Collection"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="collection-content">
                 <h3 className="collection-title">Tops</h3>
