@@ -896,3 +896,76 @@
   max-width: 600px;
   margin: 0 auto;
 }
+
+/* Checkout Page Styles */
+.checkout-section {
+  background-color: var(--dark-secondary);
+  border: 2px solid var(--border-dark);
+  padding: 2rem;
+}
+
+.checkout-section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--accent-primary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.checkout-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent-gray);
+  margin-bottom: 0.5rem;
+}
+
+.checkout-input {
+  width: 100%;
+  padding: 14px 16px;
+  background-color: var(--dark-bg);
+  border: 2px solid var(--border-dark);
+  border-radius: 0;
+  color: var(--accent-primary);
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.checkout-input:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.checkout-input::placeholder {
+  color: var(--accent-gray);
+  font-weight: 500;
+}
+
+.shipping-option {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--dark-bg);
+  border: 2px solid var(--border-dark);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.shipping-option:hover {
+  border-color: var(--accent-gold);
+}
+
+.shipping-option input[type="radio"] {
+  accent-color: var(--accent-gold);
+  width: 18px;
+  height: 18px;
+}
+
+.shipping-option input[type="radio"]:checked {
+  accent-color: var(--accent-gold);
+}
