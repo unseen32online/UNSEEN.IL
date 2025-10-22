@@ -105,7 +105,7 @@ export const mockProducts = [
     inStock: true
   },
   {
-    id: 'top-6',
+    id: 'top-7',
     name: 'Oversized Pocket Tee',
     category: 'tops',
     price: 52,
