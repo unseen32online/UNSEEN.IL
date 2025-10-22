@@ -97,7 +97,7 @@ const Cart = () => {
                 </div>
               </div>
 
-              <Button className="primary-button w-full mb-4" size="lg">
+              <Button type="submit" className="primary-button w-full mb-4" size="lg" onClick={() => navigate('/checkout')}>
                 Proceed to Checkout
               </Button>
 
