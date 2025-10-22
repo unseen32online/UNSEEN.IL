@@ -36,7 +36,15 @@ const Cart = () => {
             {cartItems.map((item) => (
               <div key={`${item.id}-${item.selectedSize}-${item.selectedColor}`} className="cart-item">
                 <div className="cart-item-image-placeholder">
-                  <div className="text-xs text-warm-gray">Image</div>
+                  {item.image ? (
+                    <img 
+                      src={item.image} 
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="text-xs text-warm-gray">Image</div>
+                  )}
                 </div>
 
                 <div className="flex-1">
