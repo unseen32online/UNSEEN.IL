@@ -40,6 +40,24 @@ export const mockProducts = [
   },
   {
     id: 'top-3',
+    name: 'Global Design',
+    category: 'tops',
+    price: 449,
+    description: '300 gsm over-sized t-shirt, made in Portugal. Contemporary design showcasing the global collective spirit.',
+    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    colors: ['Black', 'White'],
+    image: 'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/phxaxxvb_emrebey_09_09_25_0124.jpeg',
+    images: [
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/phxaxxvb_emrebey_09_09_25_0124.jpeg',
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/y1f3ddnd_emrebey_09_09_25_0126.jpeg',
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/n8holqfw_emrebey_09_09_25_0127.jpeg',
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/2wmjxlrp_emrebey_09_09_25_0157.jpeg',
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/87drd85d_emrebey_09_09_25_0160.jpeg'
+    ],
+    inStock: true
+  },
+  {
+    id: 'top-4',
     name: 'Essential Cotton Tee',
     category: 'tops',
     price: 45,
