@@ -53,7 +53,7 @@ const Header = () => {
           <nav className="md:hidden mt-6 pb-4 flex flex-col space-y-4 border-t border-dark pt-4">
             <Link to="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>Home</Link>
             <Link to="/collection/tops" className="nav-link" onClick={() => setIsMenuOpen(false)}>Tops</Link>
-            <Link to="/collection/pants" className="nav-link" onClick={() => setIsMenuOpen(false)}>Pants</Link>
+            <Link to="/collection/pants" className="nav-link" onClick={() => setIsMenuOpen(false)}>Shorts</Link>
           </nav>
         )}
       </div>
