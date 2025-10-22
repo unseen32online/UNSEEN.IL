@@ -93,7 +93,7 @@ export const mockProducts = [
     inStock: true
   },
   {
-    id: 'top-5',
+    id: 'top-6',
     name: 'Lightweight Crewneck',
     category: 'tops',
     price: 55,
