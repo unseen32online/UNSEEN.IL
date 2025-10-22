@@ -76,6 +76,23 @@ export const mockProducts = [
   },
   {
     id: 'top-5',
+    name: 'Basic',
+    category: 'tops',
+    price: 449,
+    description: '300 gsm over-sized t-shirt, made in Portugal. Essential minimalist design with clean UNSEEN branding.',
+    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    colors: ['Black', 'White'],
+    image: 'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/7hldwm6r_emrebey_09_09_25_0048.jpeg',
+    images: [
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/7hldwm6r_emrebey_09_09_25_0048.jpeg',
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/hsbijq0l_emrebey_09_09_25_0090.jpeg',
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/jc186trz_emrebey_09_09_25_0092.jpeg',
+      'https://customer-assets.emergentagent.com/job_unseen-daily/artifacts/js3xg8my_emrebey_09_09_25_0047.jpeg'
+    ],
+    inStock: true
+  },
+  {
+    id: 'top-6',
     name: 'Essential Cotton Tee',
     category: 'tops',
     price: 45,
