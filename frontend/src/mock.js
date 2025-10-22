@@ -135,7 +135,7 @@ export const mockProducts = [
     inStock: true
   },
   {
-    id: 'top-8',
+    id: 'top-10',
     name: 'Long Sleeve Polo',
     category: 'tops',
     price: 78,
