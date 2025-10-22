@@ -24,7 +24,7 @@ const Footer = () => {
             <h4 className="footer-heading">Shop</h4>
             <ul className="space-y-3">
               <li><Link to="/collection/tops" className="footer-link">Tops</Link></li>
-              <li><Link to="/collection/pants" className="footer-link">Pants</Link></li>
+              <li><Link to="/collection/pants" className="footer-link">Shorts</Link></li>
               <li><Link to="/collection/tops" className="footer-link">New Arrivals</Link></li>
             </ul>
           </div>
