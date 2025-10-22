@@ -99,7 +99,7 @@ export const mockProducts = [
     inStock: true
   },
   {
-    id: 'top-9',
+    id: 'top-7',
     name: 'Relaxed Henley',
     category: 'tops',
     price: 65,
