@@ -87,7 +87,7 @@ export const mockProducts = [
     inStock: true
   },
   {
-    id: 'top-5',
+    id: 'top-6',
     name: 'Classic Oxford Shirt',
     category: 'tops',
     price: 89,
