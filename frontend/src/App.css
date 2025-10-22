@@ -102,6 +102,102 @@
   width: 100%;
 }
 
+/* Instagram Banner */
+.instagram-banner {
+  background: linear-gradient(135deg, #833AB4 0%, #FD1D1D 50%, #F77737 100%);
+  padding: 0;
+}
+
+.instagram-banner-link {
+  display: block;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.instagram-banner-link:hover {
+  transform: scale(1.01);
+}
+
+.instagram-banner-content {
+  max-width: 7xl;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .instagram-banner-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+}
+
+.instagram-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--accent-primary);
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .instagram-icon {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.instagram-banner-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: var(--accent-primary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+@media (max-width: 768px) {
+  .instagram-banner-title {
+    font-size: 1.5rem;
+  }
+}
+
+.instagram-banner-subtitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.3px;
+}
+
+@media (max-width: 768px) {
+  .instagram-banner-subtitle {
+    font-size: 0.85rem;
+  }
+}
+
+.instagram-arrow {
+  width: 32px;
+  height: 32px;
+  color: var(--accent-primary);
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.instagram-banner-link:hover .instagram-arrow {
+  transform: translateX(8px);
+}
+
+@media (max-width: 768px) {
+  .instagram-arrow {
+    display: none;
+  }
+}
+
 .hero-title-centered {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 3rem;
