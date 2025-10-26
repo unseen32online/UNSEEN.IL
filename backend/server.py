@@ -739,6 +739,159 @@ async def send_order_confirmation_email(order: Order):
             logger.error(f"SendGrid error details: {e.body}")
         return False
 
+# Newsletter Welcome Email
+async def send_newsletter_welcome_email(subscriber_email: str, subscriber_name: str = None):
+    """Send welcome email to newsletter subscribers with UNSEEN FAM discount code"""
+    try:
+        name = subscriber_name or "Friend"
+        
+        # Create HTML email content
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
+                .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+                .header {{ background-color: #0A0A0A; color: #FFFFFF; padding: 40px; text-align: center; }}
+                .header h1 {{ margin: 0; font-size: 42px; letter-spacing: 3px; }}
+                .content {{ padding: 40px 30px; background-color: #f9f9f9; }}
+                .welcome-text {{ font-size: 18px; color: #333; margin-bottom: 20px; }}
+                .discount-box {{ background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 100%); padding: 30px; margin: 30px 0; text-align: center; border-radius: 8px; }}
+                .discount-code {{ font-size: 36px; font-weight: bold; color: #0A0A0A; letter-spacing: 4px; margin: 10px 0; }}
+                .discount-label {{ font-size: 16px; color: #0A0A0A; font-weight: bold; }}
+                .discount-details {{ font-size: 14px; color: #333; margin-top: 20px; }}
+                .cta-button {{ display: inline-block; background-color: #0A0A0A; color: #FFFFFF; padding: 15px 40px; text-decoration: none; font-weight: bold; margin: 20px 0; border-radius: 4px; }}
+                .footer {{ text-align: center; padding: 30px 20px; color: #666; font-size: 12px; background-color: #f0f0f0; }}
+                .features {{ background-color: #ffffff; padding: 20px; margin: 20px 0; }}
+                .feature-item {{ padding: 15px 0; border-bottom: 1px solid #eee; }}
+                .feature-item:last-child {{ border-bottom: none; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>UNSEEN IL</h1>
+                    <p style="margin-top: 10px; font-size: 16px; letter-spacing: 2px;">WELCOME TO THE FAMILY</p>
+                </div>
+                
+                <div class="content">
+                    <p class="welcome-text">Hey {name}! 👋</p>
+                    
+                    <p>Thank you for joining the UNSEEN FAM! We're excited to have you as part of our community.</p>
+                    
+                    <p>As a special welcome gift, here's an <strong>exclusive discount code</strong> just for you:</p>
+                    
+                    <div class="discount-box">
+                        <div class="discount-label">YOUR EXCLUSIVE CODE</div>
+                        <div class="discount-code">UNSEEN FAM</div>
+                        <div class="discount-label">25% OFF YOUR ENTIRE ORDER</div>
+                        <div class="discount-details">
+                            ✨ No minimum purchase required<br>
+                            ✨ Valid on all products<br>
+                            ✨ Never expires
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <a href="https://darkmode-fashion-3.preview.emergentagent.com/collection/tops" class="cta-button">SHOP NOW</a>
+                    </div>
+                    
+                    <div class="features">
+                        <h3 style="margin-top: 0; color: #0A0A0A;">What to expect from UNSEEN IL:</h3>
+                        <div class="feature-item">
+                            <strong>🎨 Timeless Designs</strong><br>
+                            Casual daily clothing crafted for the modern lifestyle
+                        </div>
+                        <div class="feature-item">
+                            <strong>✨ Quality First</strong><br>
+                            Premium materials and attention to detail
+                        </div>
+                        <div class="feature-item">
+                            <strong>🚀 Early Access</strong><br>
+                            Be the first to know about new drops and exclusive offers
+                        </div>
+                        <div class="feature-item">
+                            <strong>📦 Fast Shipping</strong><br>
+                            Quick delivery across Israel
+                        </div>
+                    </div>
+                    
+                    <p style="margin-top: 30px;">Questions? Reach out to us at {SENDGRID_FROM_EMAIL}</p>
+                    
+                    <p style="margin-top: 20px;">Stay UNSEEN,<br><strong>The UNSEEN IL Team</strong></p>
+                </div>
+                
+                <div class="footer">
+                    <p><strong>UNSEEN IL</strong></p>
+                    <p>Everyday Essentials, Timeless Style</p>
+                    <p style="margin-top: 15px;">
+                        <a href="https://www.instagram.com/unseen.global/" style="color: #D4AF37; text-decoration: none;">Instagram</a> | 
+                        <a href="https://wa.me/972546803020" style="color: #D4AF37; text-decoration: none;">WhatsApp</a>
+                    </p>
+                    <p style="margin-top: 15px; font-size: 10px;">
+                        You're receiving this email because you subscribed to UNSEEN IL newsletter.
+                    </p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        
+        # Create plain text version
+        text_content = f"""
+        WELCOME TO UNSEEN FAM!
+        
+        Hey {name}!
+        
+        Thank you for joining the UNSEEN FAM! We're excited to have you as part of our community.
+        
+        YOUR EXCLUSIVE DISCOUNT CODE:
+        UNSEEN FAM - 25% OFF YOUR ENTIRE ORDER
+        
+        ✨ No minimum purchase required
+        ✨ Valid on all products
+        ✨ Never expires
+        
+        Start shopping: https://darkmode-fashion-3.preview.emergentagent.com/collection/tops
+        
+        What to expect from UNSEEN IL:
+        - Timeless designs crafted for the modern lifestyle
+        - Premium quality materials
+        - Early access to new drops
+        - Fast shipping across Israel
+        
+        Questions? Reach out to us at {SENDGRID_FROM_EMAIL}
+        
+        Stay UNSEEN,
+        The UNSEEN IL Team
+        """
+        
+        # Create SendGrid message
+        message = Mail(
+            from_email=Email(SENDGRID_FROM_EMAIL, SENDGRID_FROM_NAME),
+            to_emails=To(subscriber_email),
+            subject='Welcome to UNSEEN FAM - Your 25% Discount Inside! 🎉',
+            plain_text_content=Content("text/plain", text_content),
+            html_content=Content("text/html", html_content)
+        )
+        
+        # Send email
+        if SENDGRID_API_KEY:
+            sg = SendGridAPIClient(SENDGRID_API_KEY)
+            response = sg.send(message)
+            logger.info(f"Newsletter welcome email sent to {subscriber_email} - Status: {response.status_code}")
+            return True
+        else:
+            logger.warning("SendGrid API key not configured. Welcome email not sent.")
+            return False
+            
+    except Exception as e:
+        logger.error(f"Error sending newsletter welcome email: {str(e)}")
+        if hasattr(e, 'body'):
+            logger.error(f"SendGrid error details: {e.body}")
+        return False
+
 # Create Order
 @api_router.post("/orders", response_model=Order)
 async def create_order(order_data: OrderCreate):
