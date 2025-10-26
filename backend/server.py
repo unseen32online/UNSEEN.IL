@@ -271,6 +271,65 @@ class PaymentResponse(BaseModel):
 async def root():
     return {"message": "Hello World"}
 
+# ==================== NEWSLETTER SUBSCRIPTION ENDPOINTS ====================
+
+@api_router.post("/newsletter/subscribe", response_model=dict)
+async def subscribe_to_newsletter(subscription: NewsletterSubscribe):
+    """Subscribe to newsletter and receive welcome email with UNSEEN FAM code"""
+    try:
+        # Check if already subscribed
+        existing = await db.newsletter_subscribers.find_one({"email": subscription.email}, {"_id": 0})
+        if existing:
+            return {
+                "success": True,
+                "message": "You're already subscribed to our newsletter!",
+                "already_subscribed": True
+            }
+        
+        # Create subscriber
+        subscriber = NewsletterSubscriber(
+            email=subscription.email,
+            name=subscription.name
+        )
+        
+        subscriber_dict = subscriber.model_dump()
+        subscriber_dict = serialize_for_mongo(subscriber_dict)
+        
+        # Save to database
+        await db.newsletter_subscribers.insert_one(subscriber_dict)
+        
+        # Send welcome email with discount code
+        email_sent = await send_newsletter_welcome_email(
+            subscription.email,
+            subscription.name
+        )
+        
+        if email_sent:
+            # Update that welcome email was sent
+            await db.newsletter_subscribers.update_one(
+                {"email": subscription.email},
+                {"$set": {"welcome_email_sent": True}}
+            )
+        
+        logger.info(f"New newsletter subscriber: {subscription.email}")
+        
+        return {
+            "success": True,
+            "message": "Thank you for subscribing! Check your email for your exclusive 25% discount code.",
+            "already_subscribed": False
+        }
+    except Exception as e:
+        logger.error(f"Error subscribing to newsletter: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to subscribe to newsletter")
+
+@api_router.get("/admin/newsletter/subscribers", response_model=List[dict])
+async def list_newsletter_subscribers(admin: dict = Depends(get_current_admin)):
+    """List all newsletter subscribers (admin only)"""
+    subscribers = await db.newsletter_subscribers.find({}, {"_id": 0}).sort("subscribed_at", -1).to_list(1000)
+    for sub in subscribers:
+        sub = deserialize_from_mongo(sub)
+    return subscribers
+
 # ==================== ADMIN AUTHENTICATION ENDPOINTS ====================
 
 @api_router.post("/admin/setup", response_model=dict)
