@@ -1,21 +1,64 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
-import { Package, DollarSign, TrendingUp, Users, Search, Filter } from 'lucide-react';
+import { Package, DollarSign, TrendingUp, Users, Search, Filter, LogOut } from 'lucide-react';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   const [analytics, setAnalytics] = useState(null);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedStatus, setSelectedStatus] = useState('all');
   const [searchEmail, setSearchEmail] = useState('');
+  const [adminUsername, setAdminUsername] = useState('');
 
   useEffect(() => {
-    fetchAnalytics();
-    fetchOrders();
+    checkAuth();
   }, []);
+
+  const checkAuth = async () => {
+    const token = localStorage.getItem('admin_token');
+    const username = localStorage.getItem('admin_username');
+    
+    if (!token) {
+      navigate('/admin/login');
+      return;
+    }
+
+    try {
+      // Verify token with backend
+      await axios.get(`${BACKEND_URL}/api/admin/verify`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      setAdminUsername(username);
+      fetchAnalytics();
+      fetchOrders();
+    } catch (error) {
+      console.error('Auth verification failed:', error);
+      localStorage.removeItem('admin_token');
+      localStorage.removeItem('admin_username');
+      navigate('/admin/login');
+    }
+  };
+
+  const getAuthHeaders = () => {
+    const token = localStorage.getItem('admin_token');
+    return {
+      'Authorization': `Bearer ${token}`
+    };
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('admin_token');
+    localStorage.removeItem('admin_username');
+    navigate('/admin/login');
+  };
 
   const fetchAnalytics = async () => {
     try {
