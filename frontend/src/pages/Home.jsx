@@ -148,16 +148,23 @@ const Home = () => {
           <p className="section-subtitle mb-8">
             Subscribe to receive updates on new arrivals and exclusive offers
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+          <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
             <input
               type="email"
               placeholder="Enter your email"
               className="newsletter-input"
+              value={newsletterEmail}
+              onChange={(e) => setNewsletterEmail(e.target.value)}
+              disabled={isSubscribing}
             />
-            <Button className="primary-button whitespace-nowrap">
-              Subscribe
+            <Button 
+              type="submit" 
+              className="primary-button whitespace-nowrap"
+              disabled={isSubscribing}
+            >
+              {isSubscribing ? 'Subscribing...' : 'Subscribe'}
             </Button>
-          </div>
+          </form>
         </div>
       </section>
 
