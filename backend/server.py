@@ -529,7 +529,7 @@ async def process_payment(payment_data: PaymentRequest):
 # ==================== ADMIN DASHBOARD ENDPOINTS ====================
 
 @api_router.get("/admin/analytics")
-async def get_analytics():
+async def get_analytics(admin: dict = Depends(get_current_admin)):
     """Get sales analytics for admin dashboard"""
     try:
         # Get total orders count
