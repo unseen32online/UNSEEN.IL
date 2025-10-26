@@ -306,6 +306,167 @@ async def verify_admin(admin: dict = Depends(get_current_admin)):
     """Verify admin token"""
     return {"username": admin['username'], "valid": True}
 
+# ==================== DISCOUNT CODE ENDPOINTS ====================
+
+@api_router.post("/discount/validate", response_model=DiscountCodeResponse)
+async def validate_discount_code(validation: DiscountCodeValidation):
+    """Validate a discount code"""
+    try:
+        # Find discount code
+        code = await db.discount_codes.find_one(
+            {"code": validation.code.upper(), "active": True},
+            {"_id": 0}
+        )
+        
+        if not code:
+            return DiscountCodeResponse(
+                valid=False,
+                message="Invalid discount code"
+            )
+        
+        # Check if expired
+        if code.get('expires_at'):
+            expires_at = datetime.fromisoformat(code['expires_at']) if isinstance(code['expires_at'], str) else code['expires_at']
+            if expires_at < datetime.now(timezone.utc):
+                return DiscountCodeResponse(
+                    valid=False,
+                    message="This discount code has expired"
+                )
+        
+        # Check max uses
+        if code.get('max_uses') and code.get('current_uses', 0) >= code['max_uses']:
+            return DiscountCodeResponse(
+                valid=False,
+                message="This discount code has reached its usage limit"
+            )
+        
+        # Check minimum order amount
+        if validation.order_total < code.get('min_order_amount', 0):
+            return DiscountCodeResponse(
+                valid=False,
+                message=f"Minimum order amount of ₪{code['min_order_amount']:.2f} required"
+            )
+        
+        # Calculate discount
+        discount_amount = 0
+        if code['discount_type'] == 'percentage':
+            discount_amount = (validation.order_total * code['discount_value']) / 100
+        else:  # fixed
+            discount_amount = code['discount_value']
+        
+        # Ensure discount doesn't exceed order total
+        discount_amount = min(discount_amount, validation.order_total)
+        
+        return DiscountCodeResponse(
+            valid=True,
+            discount_amount=round(discount_amount, 2),
+            message=f"Discount applied: ₪{discount_amount:.2f} off!",
+            code=code['code']
+        )
+    except Exception as e:
+        logger.error(f"Error validating discount code: {str(e)}")
+        return DiscountCodeResponse(
+            valid=False,
+            message="Error validating discount code"
+        )
+
+@api_router.post("/admin/discount-codes", response_model=dict)
+async def create_discount_code(code_data: DiscountCodeCreate, admin: dict = Depends(get_current_admin)):
+    """Create a new discount code (admin only)"""
+    try:
+        # Check if code already exists
+        existing = await db.discount_codes.find_one({"code": code_data.code.upper()}, {"_id": 0})
+        if existing:
+            raise HTTPException(status_code=400, detail="Discount code already exists")
+        
+        # Create discount code
+        discount_code = DiscountCode(
+            code=code_data.code.upper(),
+            discount_type=code_data.discount_type,
+            discount_value=code_data.discount_value,
+            min_order_amount=code_data.min_order_amount,
+            max_uses=code_data.max_uses,
+            expires_at=code_data.expires_at
+        )
+        
+        code_dict = discount_code.model_dump()
+        code_dict = serialize_for_mongo(code_dict)
+        
+        await db.discount_codes.insert_one(code_dict)
+        
+        logger.info(f"Discount code created by {admin['username']}: {code_data.code}")
+        return {"message": "Discount code created successfully", "code": code_data.code.upper()}
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error creating discount code: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to create discount code")
+
+@api_router.get("/admin/discount-codes", response_model=List[dict])
+async def list_discount_codes(admin: dict = Depends(get_current_admin)):
+    """List all discount codes (admin only)"""
+    codes = await db.discount_codes.find({}, {"_id": 0}).to_list(1000)
+    for code in codes:
+        code = deserialize_from_mongo(code)
+    return codes
+
+@api_router.delete("/admin/discount-codes/{code}")
+async def delete_discount_code(code: str, admin: dict = Depends(get_current_admin)):
+    """Delete a discount code (admin only)"""
+    result = await db.discount_codes.delete_one({"code": code.upper()})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Discount code not found")
+    
+    logger.info(f"Discount code deleted by {admin['username']}: {code}")
+    return {"message": "Discount code deleted successfully"}
+
+@api_router.post("/admin/discount-codes/create-sample")
+async def create_sample_discount_codes(admin: dict = Depends(get_current_admin)):
+    """Create sample discount codes for testing"""
+    sample_codes = [
+        {
+            "code": "WELCOME10",
+            "discount_type": "percentage",
+            "discount_value": 10,
+            "min_order_amount": 100,
+            "max_uses": 100,
+            "expires_at": None
+        },
+        {
+            "code": "SAVE20",
+            "discount_type": "percentage",
+            "discount_value": 20,
+            "min_order_amount": 200,
+            "max_uses": 50,
+            "expires_at": None
+        },
+        {
+            "code": "FREESHIP",
+            "discount_type": "fixed",
+            "discount_value": 40,
+            "min_order_amount": 150,
+            "max_uses": None,
+            "expires_at": None
+        }
+    ]
+    
+    created = []
+    for code_data in sample_codes:
+        existing = await db.discount_codes.find_one({"code": code_data["code"]}, {"_id": 0})
+        if not existing:
+            discount_code = DiscountCode(**code_data, active=True)
+            code_dict = discount_code.model_dump()
+            code_dict = serialize_for_mongo(code_dict)
+            await db.discount_codes.insert_one(code_dict)
+            created.append(code_data["code"])
+    
+    return {"message": "Sample discount codes created", "codes": created}
+
+@api_router.get("/admin/verify")
+async def verify_admin(admin: dict = Depends(get_current_admin)):
+    """Verify admin token"""
+    return {"username": admin['username'], "valid": True}
+
 @api_router.post("/admin/create", response_model=dict)
 async def create_admin(admin_data: AdminLogin, current_admin: dict = Depends(get_current_admin)):
     """Create a new admin user (requires existing admin authentication)"""
