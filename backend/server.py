@@ -588,11 +588,6 @@ async def delete_admin(username: str, current_admin: dict = Depends(get_current_
     logger.info(f"Admin user deleted by {current_admin['username']}: {username}")
     return {"message": "Admin user deleted successfully", "username": username}
 
-# Add your routes to the router instead of directly to app
-@api_router.get("/")
-async def root():
-    return {"message": "Hello World"}
-
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
     status_dict = input.model_dump()
