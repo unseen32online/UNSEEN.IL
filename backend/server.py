@@ -514,6 +514,9 @@ async def send_order_confirmation_email(order: Order):
             
     except Exception as e:
         logger.error(f"Error sending order confirmation email: {str(e)}")
+        # Log more details for debugging
+        if hasattr(e, 'body'):
+            logger.error(f"SendGrid error details: {e.body}")
         return False
 
 # Create Order
