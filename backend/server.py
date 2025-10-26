@@ -206,6 +206,8 @@ class OrderCreate(BaseModel):
     subtotal: float
     total: float
     payment_info: PaymentInfo
+    discount_code: Optional[str] = None
+    discount_amount: float = 0
 
 # Order Response Model
 class Order(BaseModel):
