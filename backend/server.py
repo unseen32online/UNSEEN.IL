@@ -223,6 +223,8 @@ class Order(BaseModel):
     subtotal: float
     total: float
     payment_info: PaymentInfo
+    discount_code: Optional[str] = None
+    discount_amount: float = 0
     status: OrderStatus = OrderStatus.PENDING_PAYMENT
     payment_transaction_id: Optional[str] = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
