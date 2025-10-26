@@ -633,7 +633,7 @@ def deserialize_from_mongo(data: dict) -> dict:
         if key in ['created_at', 'updated_at', 'timestamp'] and isinstance(value, str):
             try:
                 data[key] = datetime.fromisoformat(value)
-            except:
+            except ValueError:
                 pass
         elif isinstance(value, dict):
             data[key] = deserialize_from_mongo(value)
