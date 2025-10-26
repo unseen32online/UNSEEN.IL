@@ -104,6 +104,39 @@ class ShippingMethod(str, Enum):
     STANDARD = "standard"
     EXPRESS = "express"
 
+# Discount Code Models
+class DiscountCode(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    code: str
+    discount_type: str  # "percentage" or "fixed"
+    discount_value: float  # percentage (0-100) or fixed amount
+    min_order_amount: float = 0
+    max_uses: Optional[int] = None
+    current_uses: int = 0
+    active: bool = True
+    expires_at: Optional[datetime] = None
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class DiscountCodeCreate(BaseModel):
+    code: str
+    discount_type: str  # "percentage" or "fixed"
+    discount_value: float
+    min_order_amount: float = 0
+    max_uses: Optional[int] = None
+    expires_at: Optional[datetime] = None
+
+class DiscountCodeValidation(BaseModel):
+    code: str
+    order_total: float
+
+class DiscountCodeResponse(BaseModel):
+    valid: bool
+    discount_amount: float = 0
+    message: str
+    code: Optional[str] = None
+
 # Admin Models
 class AdminUser(BaseModel):
     model_config = ConfigDict(extra="ignore")
