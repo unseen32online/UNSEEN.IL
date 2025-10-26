@@ -34,6 +34,7 @@ const Checkout = () => {
   });
 
   const [shippingMethod, setShippingMethod] = useState('standard');
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const shippingCost = shippingMethod === 'express' ? 60 : 40;
   const finalTotal = cartTotal + shippingCost;
