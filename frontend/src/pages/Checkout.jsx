@@ -52,6 +52,46 @@ const Checkout = () => {
     }));
   };
 
+  const handleApplyDiscount = async () => {
+    if (!discountCode.trim()) {
+      setDiscountError('Please enter a discount code');
+      return;
+    }
+
+    setIsApplyingDiscount(true);
+    setDiscountError('');
+
+    try {
+      const response = await axios.post(`${BACKEND_URL}/api/discount/validate`, {
+        code: discountCode.trim(),
+        order_total: cartTotal + shippingCost
+      });
+
+      if (response.data.valid) {
+        setAppliedDiscount(response.data);
+        toast({
+          title: "Discount Applied!",
+          description: response.data.message
+        });
+      } else {
+        setDiscountError(response.data.message);
+        setAppliedDiscount(null);
+      }
+    } catch (error) {
+      console.error('Discount validation error:', error);
+      setDiscountError('Error validating discount code');
+      setAppliedDiscount(null);
+    } finally {
+      setIsApplyingDiscount(false);
+    }
+  };
+
+  const handleRemoveDiscount = () => {
+    setDiscountCode('');
+    setAppliedDiscount(null);
+    setDiscountError('');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
