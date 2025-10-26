@@ -450,8 +450,8 @@ const Checkout = () => {
                   </div>
                 </div>
 
-                <Button type="submit" className="primary-button w-full" size="lg">
-                  Place Order
+                <Button type="submit" className="primary-button w-full" size="lg" disabled={isProcessing}>
+                  {isProcessing ? 'Processing...' : 'Place Order'}
                 </Button>
               </div>
             </div>
