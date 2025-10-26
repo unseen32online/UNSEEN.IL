@@ -137,6 +137,20 @@ class DiscountCodeResponse(BaseModel):
     message: str
     code: Optional[str] = None
 
+# Newsletter Models
+class NewsletterSubscribe(BaseModel):
+    email: EmailStr
+    name: Optional[str] = None
+
+class NewsletterSubscriber(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    email: EmailStr
+    name: Optional[str] = None
+    subscribed_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    welcome_email_sent: bool = False
+
 # Admin Models
 class AdminUser(BaseModel):
     model_config = ConfigDict(extra="ignore")
