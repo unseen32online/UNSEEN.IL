@@ -153,6 +153,8 @@ const Checkout = () => {
         shipping_cost: shippingCost,
         subtotal: cartTotal,
         total: finalTotal,
+        discount_code: appliedDiscount?.code || null,
+        discount_amount: discountAmount,
         payment_info: {
           card_last_four: formData.cardNumber.slice(-4),
           card_name: formData.cardName,
