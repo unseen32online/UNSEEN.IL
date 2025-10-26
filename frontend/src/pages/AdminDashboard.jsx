@@ -159,7 +159,16 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen pt-24 pb-16">
       <div className="max-w-7xl mx-auto px-6">
-        <h1 className="page-title mb-8">Admin Dashboard</h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="page-title">Admin Dashboard</h1>
+          <div className="flex items-center gap-4">
+            <span className="text-accent-gray">Welcome, <span className="text-accent-gold font-bold">{adminUsername}</span></span>
+            <Button onClick={handleLogout} variant="outline" className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white">
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
+            </Button>
+          </div>
+        </div>
 
         {/* Analytics Cards */}
         {analytics && (
