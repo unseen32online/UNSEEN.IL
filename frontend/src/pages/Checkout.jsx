@@ -47,7 +47,7 @@ const Checkout = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Basic validation
@@ -78,17 +78,87 @@ const Checkout = () => {
       return;
     }
 
-    // Simulate order placement
-    toast({
-      title: "Order Placed Successfully!",
-      description: `Your order of ₪${finalTotal.toFixed(2)} has been confirmed. Thank you for shopping with UNSEEN!`
-    });
+    setIsProcessing(true);
 
-    // Clear cart and redirect
-    setTimeout(() => {
-      clearCart();
-      navigate('/');
-    }, 2000);
+    try {
+      // Prepare order data
+      const orderData = {
+        customer_info: {
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          email: formData.email,
+          phone: formData.phone
+        },
+        shipping_address: {
+          address: formData.address,
+          city: formData.city,
+          postal_code: formData.postalCode,
+          country: formData.country
+        },
+        items: cartItems.map(item => ({
+          product_id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+          selected_size: item.selectedSize,
+          selected_color: item.selectedColor,
+          image: item.image || item.images?.[0] || null
+        })),
+        shipping_method: shippingMethod,
+        shipping_cost: shippingCost,
+        subtotal: cartTotal,
+        total: finalTotal,
+        payment_info: {
+          card_last_four: formData.cardNumber.slice(-4),
+          card_name: formData.cardName,
+          payment_method: "credit_card"
+        }
+      };
+
+      // Create order
+      const orderResponse = await axios.post(`${BACKEND_URL}/api/orders`, orderData);
+      const order = orderResponse.data;
+
+      // Process payment
+      const paymentData = {
+        order_id: order.id,
+        amount: finalTotal,
+        card_number: formData.cardNumber,
+        card_name: formData.cardName,
+        expiry_date: formData.expiryDate,
+        cvv: formData.cvv
+      };
+
+      const paymentResponse = await axios.post(`${BACKEND_URL}/api/payment/process`, paymentData);
+
+      if (paymentResponse.data.success) {
+        toast({
+          title: "Order Placed Successfully!",
+          description: `Your order ${order.order_number} has been confirmed. Check your email for details.`
+        });
+
+        // Clear cart and redirect to order confirmation
+        clearCart();
+        setTimeout(() => {
+          navigate(`/order-confirmation/${order.order_number}`);
+        }, 1500);
+      } else {
+        toast({
+          title: "Payment Failed",
+          description: paymentResponse.data.message || "There was an issue processing your payment. Please try again.",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error('Order submission error:', error);
+      toast({
+        title: "Order Failed",
+        description: error.response?.data?.detail || "There was an error processing your order. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   if (cartItems.length === 0) {
