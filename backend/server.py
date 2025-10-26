@@ -535,11 +535,6 @@ async def create_sample_discount_codes(admin: dict = Depends(get_current_admin))
     
     return {"message": "Sample discount codes created", "codes": created}
 
-@api_router.get("/admin/verify")
-async def verify_admin(admin: dict = Depends(get_current_admin)):
-    """Verify admin token"""
-    return {"username": admin['username'], "valid": True}
-
 @api_router.post("/admin/create", response_model=dict)
 async def create_admin(admin_data: AdminLogin, current_admin: dict = Depends(get_current_admin)):
     """Create a new admin user (requires existing admin authentication)"""
