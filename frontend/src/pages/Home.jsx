@@ -1,9 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Instagram } from 'lucide-react';
 import { Button } from '../components/ui/button';
+import { useToast } from '../hooks/use-toast';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const Home = () => {
+  const { toast } = useToast();
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [isSubscribing, setIsSubscribing] = useState(false);
+
+  const handleNewsletterSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!newsletterEmail || !/\S+@\S+\.\S+/.test(newsletterEmail)) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsSubscribing(true);
+
+    try {
+      const response = await axios.post(`${BACKEND_URL}/api/newsletter/subscribe`, {
+        email: newsletterEmail
+      });
+
+      if (response.data.success) {
+        toast({
+          title: "Welcome to UNSEEN FAM! 🎉",
+          description: response.data.message
+        });
+        setNewsletterEmail('');
+      }
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      toast({
+        title: "Subscription Failed",
+        description: "Please try again later",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubscribing(false);
+    }
+  };
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
