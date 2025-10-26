@@ -4,6 +4,9 @@ import { useCart } from '../context/CartContext';
 import { Button } from '../components/ui/button';
 import { useToast } from '../hooks/use-toast';
 import { CreditCard, Package, MapPin, User } from 'lucide-react';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const Checkout = () => {
   const navigate = useNavigate();
