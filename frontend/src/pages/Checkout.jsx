@@ -35,6 +35,10 @@ const Checkout = () => {
 
   const [shippingMethod, setShippingMethod] = useState('standard');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [discountCode, setDiscountCode] = useState('');
+  const [appliedDiscount, setAppliedDiscount] = useState(null);
+  const [discountError, setDiscountError] = useState('');
+  const [isApplyingDiscount, setIsApplyingDiscount] = useState(false);
 
   const shippingCost = shippingMethod === 'express' ? 60 : 40;
   const finalTotal = cartTotal + shippingCost;
