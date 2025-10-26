@@ -636,6 +636,14 @@ async def send_order_confirmation_email(order: Order):
                     
                     <div class="order-details">
                         <p><strong>Subtotal:</strong> ₪{order.subtotal:.2f}</p>
+        """
+        
+        if order.discount_amount > 0:
+            html_content += f"""
+                        <p><strong>Discount ({order.discount_code}):</strong> <span style="color: #D4AF37;">-₪{order.discount_amount:.2f}</span></p>
+        """
+        
+        html_content += f"""
                         <p><strong>Shipping ({order.shipping_method}):</strong> ₪{order.shipping_cost:.2f}</p>
                         <div class="total">Total: ₪{order.total:.2f}</div>
                     </div>
