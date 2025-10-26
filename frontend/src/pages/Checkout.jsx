@@ -488,7 +488,50 @@ const Checkout = () => {
                     <span className="text-accent-gray">Shipping</span>
                     <span className="font-medium text-accent-primary">₪{shippingCost.toFixed(2)}</span>
                   </div>
+                  {appliedDiscount && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-green-500 flex items-center">
+                        Discount ({appliedDiscount.code})
+                        <button
+                          type="button"
+                          onClick={handleRemoveDiscount}
+                          className="ml-2 text-xs text-red-500 hover:text-red-400"
+                        >
+                          ✕
+                        </button>
+                      </span>
+                      <span className="font-medium text-green-500">-₪{discountAmount.toFixed(2)}</span>
+                    </div>
+                  )}
                 </div>
+
+                {/* Discount Code Input */}
+                {!appliedDiscount && (
+                  <div className="mb-6">
+                    <label className="checkout-label mb-2">Discount Code</label>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={discountCode}
+                        onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
+                        className="checkout-input flex-1"
+                        placeholder="Enter code"
+                      />
+                      <Button
+                        type="button"
+                        onClick={handleApplyDiscount}
+                        disabled={isApplyingDiscount || !discountCode.trim()}
+                        className="primary-button"
+                      >
+                        {isApplyingDiscount ? 'Applying...' : 'Apply'}
+                      </Button>
+                    </div>
+                    {discountError && (
+                      <p className="text-red-500 text-xs mt-2">{discountError}</p>
+                    )}
+                    <p className="text-xs text-accent-gray mt-2">Try: WELCOME10, SAVE20, or FREESHIP</p>
+                  </div>
+                )}
 
                 <div className="border-t border-dark pt-4 mb-6">
                   <div className="flex justify-between">
