@@ -12,6 +12,7 @@ import Cart from "./pages/Cart";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ContactUs from "./pages/ContactUs";
 import Checkout from "./pages/Checkout";
+import OrderConfirmation from "./pages/OrderConfirmation";
 
 function App() {
   return (
