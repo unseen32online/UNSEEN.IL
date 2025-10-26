@@ -380,39 +380,141 @@ def deserialize_from_mongo(data: dict) -> dict:
             data[key] = [deserialize_from_mongo(item) if isinstance(item, dict) else item for item in value]
     return data
 
-# Mock Email Service
+# SendGrid Email Service
 async def send_order_confirmation_email(order: Order):
-    """Mock email service - logs email to console"""
-    logger.info(f"""
-    ========== ORDER CONFIRMATION EMAIL ==========
-    To: {order.customer_info.email}
-    Subject: Order Confirmation - {order.order_number}
-    
-    Dear {order.customer_info.first_name} {order.customer_info.last_name},
-    
-    Thank you for your order with UNSEEN!
-    
-    Order Number: {order.order_number}
-    Order Date: {order.created_at.strftime('%Y-%m-%d %H:%M:%S')}
-    Status: {order.status.value}
-    
-    Items Ordered:
-    {chr(10).join([f"  - {item.name} ({item.selected_color}, {item.selected_size}) x{item.quantity} - ₪{item.price * item.quantity:.2f}" for item in order.items])}
-    
-    Subtotal: ₪{order.subtotal:.2f}
-    Shipping: ₪{order.shipping_cost:.2f}
-    Total: ₪{order.total:.2f}
-    
-    Shipping Address:
-    {order.shipping_address.address}
-    {order.shipping_address.city}, {order.shipping_address.postal_code}
-    {order.shipping_address.country}
-    
-    We will notify you when your order ships.
-    
-    Thank you for shopping with UNSEEN!
-    ==============================================
-    """)
+    """Send order confirmation email via SendGrid"""
+    try:
+        # Create HTML email content
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
+                .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+                .header {{ background-color: #0A0A0A; color: #FFFFFF; padding: 30px; text-align: center; }}
+                .header h1 {{ margin: 0; font-size: 32px; letter-spacing: 2px; }}
+                .content {{ padding: 30px; background-color: #f9f9f9; }}
+                .order-details {{ background-color: #ffffff; padding: 20px; margin: 20px 0; border-left: 4px solid #D4AF37; }}
+                .item {{ padding: 15px; border-bottom: 1px solid #eee; }}
+                .item:last-child {{ border-bottom: none; }}
+                .total {{ font-size: 20px; font-weight: bold; color: #D4AF37; padding: 20px; background-color: #ffffff; text-align: right; }}
+                .footer {{ text-align: center; padding: 20px; color: #666; font-size: 12px; }}
+                .status {{ display: inline-block; padding: 5px 15px; background-color: #D4AF37; color: #0A0A0A; font-weight: bold; border-radius: 3px; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>UNSEEN IL</h1>
+                </div>
+                
+                <div class="content">
+                    <h2>Order Confirmation</h2>
+                    <p>Dear {order.customer_info.first_name} {order.customer_info.last_name},</p>
+                    <p>Thank you for your order! We're excited to get your items to you.</p>
+                    
+                    <div class="order-details">
+                        <p><strong>Order Number:</strong> {order.order_number}</p>
+                        <p><strong>Order Date:</strong> {order.created_at.strftime('%B %d, %Y at %H:%M')}</p>
+                        <p><strong>Status:</strong> <span class="status">{order.status.value.replace('_', ' ').title()}</span></p>
+                    </div>
+                    
+                    <h3>Order Items:</h3>
+                    <div class="order-details">
+        """
+        
+        for item in order.items:
+            html_content += f"""
+                        <div class="item">
+                            <strong>{item.name}</strong><br>
+                            Color: {item.selected_color} | Size: {item.selected_size}<br>
+                            Quantity: {item.quantity} × ₪{item.price:.2f} = ₪{(item.price * item.quantity):.2f}
+                        </div>
+        """
+        
+        html_content += f"""
+                    </div>
+                    
+                    <div class="order-details">
+                        <p><strong>Subtotal:</strong> ₪{order.subtotal:.2f}</p>
+                        <p><strong>Shipping ({order.shipping_method}):</strong> ₪{order.shipping_cost:.2f}</p>
+                        <div class="total">Total: ₪{order.total:.2f}</div>
+                    </div>
+                    
+                    <h3>Shipping Address:</h3>
+                    <div class="order-details">
+                        <p>
+                            {order.shipping_address.address}<br>
+                            {order.shipping_address.city}, {order.shipping_address.postal_code}<br>
+                            {order.shipping_address.country}
+                        </p>
+                    </div>
+                    
+                    <p>We will notify you when your order ships.</p>
+                    <p>If you have any questions, please contact us at {SENDGRID_FROM_EMAIL}</p>
+                </div>
+                
+                <div class="footer">
+                    <p>Thank you for shopping with UNSEEN IL</p>
+                    <p>&copy; 2024 UNSEEN IL. All rights reserved.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        
+        # Create plain text version
+        text_content = f"""
+        Order Confirmation - UNSEEN IL
+        
+        Dear {order.customer_info.first_name} {order.customer_info.last_name},
+        
+        Thank you for your order!
+        
+        Order Number: {order.order_number}
+        Order Date: {order.created_at.strftime('%B %d, %Y at %H:%M')}
+        Status: {order.status.value.replace('_', ' ').title()}
+        
+        Items Ordered:
+        {chr(10).join([f"  - {item.name} ({item.selected_color}, {item.selected_size}) x{item.quantity} - ₪{item.price * item.quantity:.2f}" for item in order.items])}
+        
+        Subtotal: ₪{order.subtotal:.2f}
+        Shipping: ₪{order.shipping_cost:.2f}
+        Total: ₪{order.total:.2f}
+        
+        Shipping Address:
+        {order.shipping_address.address}
+        {order.shipping_address.city}, {order.shipping_address.postal_code}
+        {order.shipping_address.country}
+        
+        We will notify you when your order ships.
+        
+        Thank you for shopping with UNSEEN IL!
+        """
+        
+        # Create SendGrid message
+        message = Mail(
+            from_email=Email(SENDGRID_FROM_EMAIL, SENDGRID_FROM_NAME),
+            to_emails=To(order.customer_info.email),
+            subject=f'Order Confirmation - {order.order_number}',
+            plain_text_content=Content("text/plain", text_content),
+            html_content=Content("text/html", html_content)
+        )
+        
+        # Send email
+        if SENDGRID_API_KEY:
+            sg = SendGridAPIClient(SENDGRID_API_KEY)
+            response = sg.send(message)
+            logger.info(f"Order confirmation email sent to {order.customer_info.email} - Status: {response.status_code}")
+            return True
+        else:
+            logger.warning("SendGrid API key not configured. Email not sent.")
+            return False
+            
+    except Exception as e:
+        logger.error(f"Error sending order confirmation email: {str(e)}")
+        return False
 
 # Create Order
 @api_router.post("/orders", response_model=Order)
