@@ -13,6 +13,8 @@ from datetime import datetime, timezone, timedelta
 from enum import Enum
 from passlib.context import CryptContext
 from jose import JWTError, jwt
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail, Email, To, Content
 
 
 ROOT_DIR = Path(__file__).parent
