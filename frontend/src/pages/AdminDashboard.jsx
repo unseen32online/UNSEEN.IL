@@ -62,10 +62,15 @@ const AdminDashboard = () => {
 
   const fetchAnalytics = async () => {
     try {
-      const response = await axios.get(`${BACKEND_URL}/api/admin/analytics`);
+      const response = await axios.get(`${BACKEND_URL}/api/admin/analytics`, {
+        headers: getAuthHeaders()
+      });
       setAnalytics(response.data);
     } catch (error) {
       console.error('Error fetching analytics:', error);
+      if (error.response?.status === 401) {
+        handleLogout();
+      }
     }
   };
 
