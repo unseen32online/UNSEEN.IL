@@ -41,7 +41,8 @@ const Checkout = () => {
   const [isApplyingDiscount, setIsApplyingDiscount] = useState(false);
 
   const shippingCost = shippingMethod === 'express' ? 60 : 40;
-  const finalTotal = cartTotal + shippingCost;
+  const discountAmount = appliedDiscount?.discount_amount || 0;
+  const finalTotal = cartTotal + shippingCost - discountAmount;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
