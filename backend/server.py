@@ -213,6 +213,60 @@ class PaymentResponse(BaseModel):
 async def root():
     return {"message": "Hello World"}
 
+# ==================== ADMIN AUTHENTICATION ENDPOINTS ====================
+
+@api_router.post("/admin/setup", response_model=dict)
+async def setup_admin(admin_data: AdminLogin):
+    """Create initial admin user (only if no admins exist)"""
+    existing_admin = await db.admins.find_one({})
+    if existing_admin:
+        raise HTTPException(status_code=400, detail="Admin already exists. Use login endpoint.")
+    
+    # Create admin user
+    admin = AdminUser(
+        username=admin_data.username,
+        password_hash=get_password_hash(admin_data.password)
+    )
+    
+    admin_dict = admin.model_dump()
+    admin_dict['created_at'] = admin_dict['created_at'].isoformat()
+    
+    await db.admins.insert_one(admin_dict)
+    
+    logger.info(f"Admin user created: {admin_data.username}")
+    return {"message": "Admin user created successfully", "username": admin_data.username}
+
+@api_router.post("/admin/login", response_model=AdminLoginResponse)
+async def admin_login(login_data: AdminLogin):
+    """Admin login endpoint"""
+    # Find admin user
+    admin = await db.admins.find_one({"username": login_data.username}, {"_id": 0})
+    
+    if not admin or not verify_password(login_data.password, admin['password_hash']):
+        raise HTTPException(
+            status_code=401,
+            detail="Incorrect username or password"
+        )
+    
+    # Create access token
+    access_token = create_access_token(data={"sub": admin['username']})
+    
+    logger.info(f"Admin logged in: {admin['username']}")
+    return AdminLoginResponse(
+        access_token=access_token,
+        username=admin['username']
+    )
+
+@api_router.get("/admin/verify")
+async def verify_admin(admin: dict = Depends(get_current_admin)):
+    """Verify admin token"""
+    return {"username": admin['username'], "valid": True}
+
+# Add your routes to the router instead of directly to app
+@api_router.get("/")
+async def root():
+    return {"message": "Hello World"}
+
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
     status_dict = input.model_dump()
