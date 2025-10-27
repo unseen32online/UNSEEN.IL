@@ -529,7 +529,6 @@ const Checkout = () => {
                     {discountError && (
                       <p className="text-red-500 text-xs mt-2">{discountError}</p>
                     )}
-                    <p className="text-xs text-accent-gray mt-2">Try: WELCOME10, SAVE20, or FREESHIP</p>
                   </div>
                 )}
 
