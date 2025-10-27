@@ -1060,51 +1060,72 @@ async def delete_order(order_id: str):
 
 # ==================== PAYMENT MOCK ENDPOINTS ====================
 
+# Import HYP client
+from hyp_client import hyp_client
+
 @api_router.post("/payment/process", response_model=PaymentResponse)
 async def process_payment(payment_data: PaymentRequest):
-    """Mock payment processing endpoint"""
+    """Process payment through HYP gateway"""
     try:
-        # Simulate payment processing
-        # In production, this would integrate with HYP payment gateway
-        
-        # Mock validation
-        if not payment_data.card_number or len(payment_data.card_number.replace(" ", "")) < 13:
+        # Get order to verify it exists
+        order = await db.orders.find_one({"id": payment_data.order_id}, {"_id": 0})
+        if not order:
             return PaymentResponse(
                 success=False,
-                message="Invalid card number",
+                message="Order not found",
                 order_id=payment_data.order_id
             )
         
-        if not payment_data.cvv or len(payment_data.cvv) < 3:
-            return PaymentResponse(
-                success=False,
-                message="Invalid CVV",
-                order_id=payment_data.order_id
-            )
+        # Parse expiry date from MM/YY format
+        if '/' in payment_data.expiry_date:
+            month, year = payment_data.expiry_date.split('/')
+        else:
+            # Assume MMYY format
+            month = payment_data.expiry_date[:2]
+            year = payment_data.expiry_date[2:]
         
-        # Generate mock transaction ID
-        transaction_id = f"TXN-{uuid.uuid4().hex[:12].upper()}"
+        # Process payment with HYP
+        hyp_result = hyp_client.process_payment(
+            amount=payment_data.amount,
+            card_number=payment_data.card_number,
+            expiry_month=month,
+            expiry_year=year,
+            cvv=payment_data.cvv,
+            order_id=payment_data.order_id,
+            customer_name=payment_data.card_name
+        )
         
-        # Update order with payment confirmation
-        await db.orders.update_one(
-            {"id": payment_data.order_id},
-            {
-                "$set": {
-                    "status": OrderStatus.PAYMENT_CONFIRMED.value,
-                    "payment_transaction_id": transaction_id,
-                    "updated_at": datetime.now(timezone.utc).isoformat()
+        # Update order with payment result
+        if hyp_result['success']:
+            await db.orders.update_one(
+                {"id": payment_data.order_id},
+                {
+                    "$set": {
+                        "status": OrderStatus.PAYMENT_CONFIRMED.value,
+                        "payment_transaction_id": hyp_result.get('transaction_id'),
+                        "updated_at": datetime.now(timezone.utc).isoformat()
+                    }
                 }
-            }
-        )
-        
-        logger.info(f"Payment processed successfully for order {payment_data.order_id}: {transaction_id}")
-        
-        return PaymentResponse(
-            success=True,
-            transaction_id=transaction_id,
-            message="Payment processed successfully",
-            order_id=payment_data.order_id
-        )
+            )
+            
+            logger.info(f"Payment processed successfully for order {payment_data.order_id}: {hyp_result.get('transaction_id')}")
+            
+            return PaymentResponse(
+                success=True,
+                transaction_id=hyp_result.get('transaction_id'),
+                message=f"Payment processed successfully. Authorization: {hyp_result.get('authorization_code')}",
+                order_id=payment_data.order_id
+            )
+        else:
+            # Payment failed
+            logger.warning(f"Payment failed for order {payment_data.order_id}: {hyp_result.get('response_message')}")
+            
+            return PaymentResponse(
+                success=False,
+                message=hyp_result.get('response_message', 'Payment declined'),
+                order_id=payment_data.order_id
+            )
+    
     except Exception as e:
         logger.error(f"Payment processing error: {str(e)}")
         return PaymentResponse(
